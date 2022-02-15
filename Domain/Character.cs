@@ -26,23 +26,49 @@ namespace Domain
             HealingValue = Constants.BASE_HEALING_VALUE;
 
         }
-        public int Damage(Character character)
+        public int Damage(Character target)
         {
-            character.Health -= AttackDamage;
-            if(character.Health <= 0)
+            var damageDealt = 0;
+            if(target.ID != ID)
             {
-                character.Health = 0;
-                character.IsAlive = false;
+                damageDealt = CalculateDamage(target);
+                target.Health -= damageDealt;
+                if (target.Health <= 0)
+                {
+                    target.Health = 0;
+                    target.IsAlive = false;
+                }
             }
-            return AttackDamage;
+
+            return damageDealt;
         }
-        public int Heal(Character character)
+        public int Heal(Character target)
         {
-            if (character.IsAlive)
+            var healingDealt = 0;
+            if(target.ID == ID)
             {
-                character.Health = character.Health + HealingValue > Constants.MAX_HEALTH ? Constants.MAX_HEALTH : character.Health + HealingValue;
+                if (target.IsAlive)
+                {
+                    healingDealt = HealingValue;
+                    target.Health = target.Health + healingDealt > Constants.MAX_HEALTH ? Constants.MAX_HEALTH : target.Health + healingDealt;
+                }
             }
-            return HealingValue;
+
+            return healingDealt;
+        }
+        private int CalculateDamage(Character defender)
+        {
+            var damageDealt = AttackDamage;
+            var levelDifference = Level - defender.Level;
+            if(levelDifference >= 5)
+            {
+                damageDealt = (int)(AttackDamage * Constants.GREATER_THAN_FIVE_DAMAGE_MULTIPLIER);
+            }
+            else if (levelDifference <= -5)
+            {
+                damageDealt = (int)(AttackDamage * Constants.LESS_THAN_FIVE_DAMAGE_REDUCER);
+            }
+            return damageDealt;
         }
     }
 }
