@@ -15,6 +15,8 @@ namespace Domain
         public int Level { get; set; }
         public int AttackDamage { get; set; }
         public int HealingValue { get; set; }
+        public int AttackRange { get; set; }
+        public (int x, int y) Position { get; set; }
 
         public Character(bool isAlive = true)
         {
@@ -24,51 +26,8 @@ namespace Domain
             Level = 1;
             AttackDamage = Constants.BASE_ATTACK_DAMAGE;
             HealingValue = Constants.BASE_HEALING_VALUE;
-
-        }
-        public int Damage(Character target)
-        {
-            var damageDealt = 0;
-            if(target.ID != ID)
-            {
-                damageDealt = CalculateDamage(target);
-                target.Health -= damageDealt;
-                if (target.Health <= 0)
-                {
-                    target.Health = 0;
-                    target.IsAlive = false;
-                }
-            }
-
-            return damageDealt;
-        }
-        public int Heal(Character target)
-        {
-            var healingDealt = 0;
-            if(target.ID == ID)
-            {
-                if (target.IsAlive)
-                {
-                    healingDealt = HealingValue;
-                    target.Health = target.Health + healingDealt > Constants.MAX_HEALTH ? Constants.MAX_HEALTH : target.Health + healingDealt;
-                }
-            }
-
-            return healingDealt;
-        }
-        private int CalculateDamage(Character defender)
-        {
-            var damageDealt = AttackDamage;
-            var levelDifference = Level - defender.Level;
-            if(levelDifference >= 5)
-            {
-                damageDealt = (int)(AttackDamage * Constants.GREATER_THAN_FIVE_DAMAGE_MULTIPLIER);
-            }
-            else if (levelDifference <= -5)
-            {
-                damageDealt = (int)(AttackDamage * Constants.LESS_THAN_FIVE_DAMAGE_REDUCER);
-            }
-            return damageDealt;
+            AttackRange = 0;
+            Position = (0, 0);
         }
     }
 }
