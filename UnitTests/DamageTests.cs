@@ -12,7 +12,9 @@ namespace DamageTests
         public void Damage_GivenOtherSameLevel_HealthAdjustedByDamageValue()
         {
             var attacker = new Character();
-            var defender = new Character();
+            var defender = new Mock<ITarget>().SetupAllProperties().Object;
+            defender.Level = attacker.Level;
+            defender.Health = 1000;
             var beforeHealth = defender.Health;
             var locationService = new Mock<ILocationService>();
             locationService.Setup(x => x.InRange(attacker, defender)).Returns(true);
@@ -27,7 +29,9 @@ namespace DamageTests
         public void Damage_GivenOtherSameLevelNotInRange_HealthIsNotAdjusted()
         {
             var attacker = new Character();
-            var defender = new Character();
+            var defender = new Mock<ITarget>().SetupAllProperties().Object;
+            defender.Level = attacker.Level;
+            defender.Health = 1000;
             var beforeHealth = defender.Health;
             var locationService = new Mock<ILocationService>();
             locationService.Setup(x => x.InRange(attacker, defender)).Returns(false);
@@ -42,7 +46,8 @@ namespace DamageTests
         public void Damage_GivenOtherLowerLevelGreaterThan5_HealthAdjustedWithMultiplier()
         {
             var attacker = new Character();
-            var defender = new Character();
+            var defender = new Mock<ITarget>().SetupAllProperties().Object;
+            defender.Health = 1000;
             attacker.Level = 6;
             defender.Level = 1;
             var beforeHealth = defender.Health;
@@ -58,7 +63,8 @@ namespace DamageTests
         public void Damage_GivenOtherHigherLevelGreaterThan5_HealthAdjustedWithMultiplier()
         {
             var attacker = new Character();
-            var defender = new Character();
+            var defender = new Mock<ITarget>().SetupAllProperties().Object;
+            defender.Health = 1000;
             attacker.Level = 1;
             defender.Level = 6;
             var beforeHealth = defender.Health;
@@ -89,7 +95,7 @@ namespace DamageTests
         public void Damage_GivenSomeoneSameFaction_HealthIsNotAdjusted()
         {
             var attacker = new Character();
-            var defender = attacker;
+            var defender = new Character();
             var beforeHealth = attacker.Health;
             var locationService = new Mock<ILocationService>();
             locationService.Setup(x => x.InRange(attacker, defender)).Returns(true);
@@ -103,10 +109,10 @@ namespace DamageTests
             Assert.Equal(beforeHealth, attacker.Health);
         }
         [Fact]
-        public void Damage_GivenDamageMoreThanHealth_HealthIsZeroAndCharacterDead()
+        public void Damage_GivenDamageMoreThanHealth_HealthIsZeroAndTargetIsDead()
         {
             var attacker = new Character();
-            var defender = new Character();
+            var defender = new Mock<ITarget>().SetupAllProperties().Object;
             defender.Health = 1;
             var locationService = new Mock<ILocationService>();
             locationService.Setup(x => x.InRange(attacker, defender)).Returns(true);

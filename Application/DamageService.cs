@@ -10,10 +10,12 @@ namespace Application
 {
     public class DamageService
     {
-        public static int Attack(Character attacker, Character defender, ILocationService locationService)
+        public static int Attack(Character attacker, ITarget defender, ILocationService locationService)
         {
+            var defendingCharacter = defender as Character;
+            bool isNonCharacterOrNotInFaction = defendingCharacter != null ? !(attacker.Factions.Any(f => defendingCharacter.Factions.Contains(f))) : true;
             var damageDealt = 0;
-            if (defender.ID != attacker.ID && locationService.InRange(attacker, defender) && !attacker.Factions.Any(f => defender.Factions.Contains(f)))
+            if (defender.ID != attacker.ID && locationService.InRange(attacker, defender) && isNonCharacterOrNotInFaction)
             {
                 damageDealt = CalculateDamage(attacker, defender);
                 defender.Health -= damageDealt;
@@ -25,7 +27,7 @@ namespace Application
             }
             return damageDealt;
         }
-        private static int CalculateDamage(Character attacker, Character defender)
+        private static int CalculateDamage(Character attacker, ITarget defender)
         {
             var damageDealt = attacker.AttackDamage;
             var levelDifference = attacker.Level - defender.Level;

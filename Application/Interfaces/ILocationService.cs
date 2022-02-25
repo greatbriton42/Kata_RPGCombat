@@ -9,6 +9,6 @@ namespace Application
 {
     public interface ILocationService
     {
-        public bool InRange(Character attacker, Character defender);
+        public bool InRange(Character attacker, ITarget defender);
     }
 }

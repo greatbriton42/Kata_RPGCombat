@@ -15,5 +15,6 @@ namespace Common
         public const float LESS_THAN_FIVE_DAMAGE_REDUCER = .5F;
         public const int MELEE_ATTACK_RANGE = 2;
         public const int RANGED_ATTACK_RANGE = 20;
+        public const int TREE_HEALTH = 2000;
     }
 }

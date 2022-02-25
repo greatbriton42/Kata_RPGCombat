@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Character
+    public class Character:ITarget
     {
         public Guid ID { get; }
         public int Health { get; set; }

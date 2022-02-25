@@ -9,7 +9,7 @@ namespace Application
 {
     public class LocationService: ILocationService
     {
-        public bool InRange(Character attacker, Character defender)
+        public bool InRange(Character attacker, ITarget defender)
         {
             var distance = Math.Sqrt(Math.Pow(attacker.Position.y - defender.Position.y, 2) + Math.Pow(attacker.Position.x - defender.Position.x, 2));
             return distance <= attacker.AttackRange;
