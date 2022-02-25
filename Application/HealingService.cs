@@ -13,7 +13,7 @@ namespace Application
         public static int Heal(Character healer, Character target)
         {
             var healingDealt = 0;
-            if (target.ID == healer.ID)
+            if (target.ID == healer.ID || healer.Factions.Any(f => target.Factions.Contains(f)))
             {
                 if (target.IsAlive)
                 {

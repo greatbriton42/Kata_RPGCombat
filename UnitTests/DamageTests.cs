@@ -86,6 +86,23 @@ namespace DamageTests
             Assert.Equal(beforeHealth, attacker.Health);
         }
         [Fact]
+        public void Damage_GivenSomeoneSameFaction_HealthIsNotAdjusted()
+        {
+            var attacker = new Character();
+            var defender = attacker;
+            var beforeHealth = attacker.Health;
+            var locationService = new Mock<ILocationService>();
+            locationService.Setup(x => x.InRange(attacker, defender)).Returns(true);
+            var factionService = new FactionService();
+            factionService.AddToFaction(attacker, Faction.Peacemakers);
+            factionService.AddToFaction(defender, Faction.Peacemakers);
+
+            var damageDealt = DamageService.Attack(attacker, defender, locationService.Object);
+
+            Assert.Equal(0, damageDealt);
+            Assert.Equal(beforeHealth, attacker.Health);
+        }
+        [Fact]
         public void Damage_GivenDamageMoreThanHealth_HealthIsZeroAndCharacterDead()
         {
             var attacker = new Character();

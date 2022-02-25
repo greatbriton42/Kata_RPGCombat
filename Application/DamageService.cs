@@ -13,7 +13,7 @@ namespace Application
         public static int Attack(Character attacker, Character defender, ILocationService locationService)
         {
             var damageDealt = 0;
-            if (defender.ID != attacker.ID && locationService.InRange(attacker, defender))
+            if (defender.ID != attacker.ID && locationService.InRange(attacker, defender) && !attacker.Factions.Any(f => defender.Factions.Contains(f)))
             {
                 damageDealt = CalculateDamage(attacker, defender);
                 defender.Health -= damageDealt;

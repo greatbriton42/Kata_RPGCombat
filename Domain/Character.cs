@@ -17,6 +17,7 @@ namespace Domain
         public int HealingValue { get; set; }
         public int AttackRange { get; set; }
         public (int x, int y) Position { get; set; }
+        public List<Faction> Factions { get; set; }
 
         public Character(bool isAlive = true)
         {
@@ -28,6 +29,7 @@ namespace Domain
             HealingValue = Constants.BASE_HEALING_VALUE;
             AttackRange = 0;
             Position = (0, 0);
+            Factions = new List<Faction>();
         }
     }
 }
