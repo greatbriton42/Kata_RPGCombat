@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{98640116-DDBB-4676-90C7-090EE1B92A0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZombieSurvivor", "..\ZombieSurvivor\ZombieSurvivor.csproj", "{C25AB7C9-AB62-46CF-A352-D20E4087F446}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZombieSurvivor", "ZombieSurvivor.csproj", "{C25AB7C9-AB62-46CF-A352-D20E4087F446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "..\Application\Application.csproj", "{10873457-F1B6-4DF4-B8F5-3BD5A4FBC049}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{10873457-F1B6-4DF4-B8F5-3BD5A4FBC049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{1DFC4CAB-CB25-4232-A833-D711B5FA78EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{1DFC4CAB-CB25-4232-A833-D711B5FA78EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{81E2906A-1322-479C-A2F5-FE92CC3F6F02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{81E2906A-1322-479C-A2F5-FE92CC3F6F02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
