@@ -31,5 +31,32 @@ namespace UnitTests
 
             survivor.IsAlive.Should().BeFalse();
         }
+        [Fact]
+        public void Survivor_Wounded_DecreaseReserveCapacity()
+        {
+            var survivor = new Survivor("test");
+            var capacity = survivor.Reserve.Capacity;
+
+            survivor.Wound();
+
+            survivor.Reserve.Capacity.Should().BeLessThan(capacity);    
+        }
+        [Fact]
+        public void Survivor_WoundedWithFullReserve_LosesItem()
+        {
+            var survivor = new Survivor("test");
+            var originalEquipment = new List<Equipment>();
+            for(int count = 0; count < Constants.BASE_NUMBER_EQUIPMENT_IN_RESERVE; count++)
+            {
+                var equipment = new Mock<Equipment>();
+                survivor.Reserve.Add(equipment.Object);
+                originalEquipment.Add(equipment.Object);
+            }
+            var capacity = survivor.Reserve.Capacity;
+
+            survivor.Wound();
+
+            survivor.Reserve.Should().NotHaveSameCount(originalEquipment);
+        }
     }
 }

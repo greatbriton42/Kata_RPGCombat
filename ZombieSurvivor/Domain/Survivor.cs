@@ -5,13 +5,16 @@ using System.Linq;
 
 namespace Domain
 {
-    public class Survivor: ISurvivor
+    public class Survivor : ISurvivor
     {
         public string Name { get; set; }
         public int Wounds { get; set; }
         public List<Action> Actions { get; set; }
         public int NumberOfActions { get; set; }
         public bool IsAlive { get; set; }
+        public List<Equipment> Reserve {get; set;}
+        public Equipment RightHandItem { get; set; }
+        public Equipment LeftHandItem { get; set; }
 
         public Survivor(string name)
         {
@@ -22,23 +25,19 @@ namespace Domain
             Actions.Add(new ExerciseAction());
             Actions.Add(new EatAction());
             IsAlive = true;
+            Reserve = new List<Equipment>(Constants.BASE_NUMBER_EQUIPMENT_IN_RESERVE);
         }
-        public void PerformAction()
+        public void RightHandAction()
         {
-            int selectedAction;
-            string userInput;
-            do
-            {
-                Console.WriteLine();
-                Console.WriteLine("Choose and Action");
-                foreach (var action in Actions.OrderBy(x => x.ActionId))
-                {
-                    Console.WriteLine($"{action.ActionId}. {action.Name}");
-                }
-                userInput = Console.ReadLine();
-            }
-            while (!int.TryParse(userInput, out selectedAction));
-            Actions.Where(x => x.ActionId == selectedAction).FirstOrDefault().ExecuteAction();
+            RightHandItem.UseEquipment();
+        }
+        public void LeftHandAction()
+        {
+            LeftHandItem.UseEquipment();
+        }
+        public void PerformAction(Action action)
+        {
+            Actions.Where(a => a.Equals(action)).FirstOrDefault()?.ExecuteAction();
         }
         public void Wound()
         {
@@ -48,6 +47,17 @@ namespace Domain
                 IsAlive = false;
                 Console.WriteLine($"The Player {Name} has suffered to many wounds and died.");
             }
+            DecreaseReserve();
+        }
+        private void DecreaseReserve()
+        {
+            if (Reserve.Count == Reserve.Capacity)
+            {
+                var item = Reserve.ElementAt(new Random().Next(Reserve.Count));
+                Reserve.Remove(item);
+                Console.WriteLine($"The Player {Name} has dropped the piece of equipment {item.Name} after receiving a wound");
+            }
+            Reserve.Capacity--;
         }
 
     }

@@ -12,7 +12,7 @@ namespace Domain
         public int Wounds { get; set; }
         public List<Action> Actions { get; set; }
         public int NumberOfActions { get; set; }
-        public void PerformAction();
+        public void PerformAction(Action action);
         public void Wound();
     }
 }
