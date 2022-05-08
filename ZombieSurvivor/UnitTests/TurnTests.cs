@@ -4,8 +4,9 @@ using Domain;
 using FluentAssertions;
 using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
-
+using Action = Domain.Action;
 
 namespace UnitTests
 {
@@ -16,13 +17,15 @@ namespace UnitTests
         {
             var survivorMock = new Mock<ISurvivor>();
             survivorMock.SetupAllProperties();
-            survivorMock.Setup(x => x.PerformAction()).Verifiable();
             survivorMock.Object.NumberOfActions = 3;
+            survivorMock.Object.Actions = new List<Action>();
+            survivorMock.Object.Actions.Add(new SleepAction());
+
             var turnService = new TurnService();
 
             turnService.TakeTurn(survivorMock.Object);
 
-            survivorMock.Verify(x => x.PerformAction(), Times.Exactly(Constants.STARTING_NUMBER_ACTIONS_PER_TURN));
+            survivorMock.Verify(x => x.PerformAction(It.IsAny<Action>()), Times.Exactly(Constants.STARTING_NUMBER_ACTIONS_PER_TURN));
         }
     }
 }
