@@ -13,6 +13,6 @@ namespace Domain
         public List<Action> Actions { get; set; }
         public int NumberOfActions { get; set; }
         public void PerformAction(Action action);
-        public void Wound();
+        public void Wound(int numberOfWounds);
     }
 }

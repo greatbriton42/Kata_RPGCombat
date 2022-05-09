@@ -15,6 +15,7 @@ namespace Domain
         public List<Equipment> Reserve {get; set;}
         public Equipment RightHandItem { get; set; }
         public Equipment LeftHandItem { get; set; }
+        public ISurvivorEvents SurvivorEvents { get; set; }
 
         public Survivor(string name)
         {
@@ -39,12 +40,13 @@ namespace Domain
         {
             Actions.Where(a => a.Equals(action)).FirstOrDefault()?.ExecuteAction();
         }
-        public void Wound()
+        public void Wound(int numberOfWounds = 1)
         {
-            Wounds++;
+            Wounds += numberOfWounds;
             if (Wounds >= Constants.NUMBER_WOUNDS_TILL_DEATH)
             {
                 IsAlive = false;
+                SurvivorEvents.PlayerDied(this);
                 Console.WriteLine($"The Player {Name} has suffered to many wounds and died.");
             }
             DecreaseReserve();

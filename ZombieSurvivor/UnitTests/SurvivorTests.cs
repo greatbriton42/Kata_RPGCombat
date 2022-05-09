@@ -25,6 +25,8 @@ namespace UnitTests
         public void Survivor_WoundedOverAmountNeededForDeath_SurvivorDead()
         {
             var survivor = new Survivor("test");
+            var game = new Game();
+            game.AddSurvivor(survivor);
 
             for(int count = 0; count < Constants.NUMBER_WOUNDS_TILL_DEATH; count++)
                 survivor.Wound();
